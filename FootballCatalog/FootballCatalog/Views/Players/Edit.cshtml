@@ -1,0 +1,71 @@
+﻿@model FootballCatalog.Models.Player
+
+<form asp-action="Edit" asp-controller="Players" asp-route-id="@Model.Id">
+    <div class="validation" asp-validation-summary="ModelOnly"></div>
+    <div class="form-group">
+        <label asp-for="Name" class="control-label"></label>
+        <input type="text" asp-for="Name" class="form-control" id="Name" />
+        <span asp-validation-for="Name"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Surname" class="control-label"></label>
+        <input type="text" asp-for="Surname" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Gender" class="control-label"></label>
+        <input type="text" asp-for="Gender" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Birthday" class="control-label"></label>
+        <input type="date" asp-for="Birthday" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="TeamId" class="control-label"></label>
+        <select asp-for="TeamId" class="form-control-range" id="sel">
+            @if (ViewBag.Teams == null)
+            {
+                <option>Пусто</option>
+            }
+            else
+            {
+                foreach (var item in ViewBag.Teams)
+                {
+                    <option value="@item.Id">@item.Name</option>
+                }
+            }
+        </select>
+        <span asp-validation-for="TeamId"></span>
+        <input type="button" value="+" class="btn btn-default" onclick="showHide()" id="AddTeamButton" />
+        <div class="form-group" id="ShowHideThis">
+            <label class="control-label">Новая команда</label>
+            <input type="text" class="form-control" id="teamField" />
+            <input type="button" value="Добавить" class="btn btn-default" onclick="addTeam()" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="Country" class="control-label"></label>
+        <select asp-for="Country" class="form-control-range">
+            <option value="@Model.Country" selected disabled>@Model.Country</option>
+            <option value="Россия">Россия</option>
+            <option value="США">США</option>
+            <option value="Италия">Италия</option>
+        </select>
+        <span asp-validation-for="Country"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Добавить" class="btn btn-default" />
+        <a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-default">Отмена</a>
+    </div>
+</form>
+
+@section scripts{
+
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
+
+<style>
+    #ShowHideThis {
+        display: none;
+    }
+</style>
